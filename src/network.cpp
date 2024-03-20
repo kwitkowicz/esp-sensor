@@ -20,7 +20,7 @@ void initWiFi()
     WiFi.persistent(true);
 
 #ifdef DEBUG
-    serialPrintInfo();
+    serialPrintWiFiInfo();
 #endif
 }
 
@@ -40,7 +40,7 @@ String getMacAddress()
 {
     return WiFi.macAddress();
 }
-void serialPrintInfo()
+void serialPrintWiFiInfo()
 {
     Serial.println('\n');
     Serial.println("Connection established!");
@@ -52,4 +52,28 @@ void serialPrintInfo()
     Serial.println(WiFi.gatewayIP());
     Serial.print("RSSI: ");
     Serial.println(WiFi.RSSI());
+}
+
+void configTime()
+{
+    configTime(gmtOffset_sec, daylightOffset_sec, NTP_SERVER);
+}
+
+void serialPrintCurrentTime()
+{
+    Serial.print("Current time:\t");
+    Serial.println(getStringCurrentTime());
+}
+
+String getStringCurrentTime()
+{
+    char timeString[21];
+    struct tm timeinfo;
+    if (!getLocalTime(&timeinfo))
+    {
+        Serial.println("Failed to obtain time");
+        return "getting time failed";
+    }
+    strftime(timeString, sizeof(timeString), "%d-%m-%Y %H:%M:%S", &timeinfo);
+    return timeString;
 }
