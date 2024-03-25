@@ -56,7 +56,7 @@ void serialPrintWiFiInfo()
 
 void configTime()
 {
-    configTime(gmtOffset_sec, daylightOffset_sec, NTP_SERVER);
+    configTime(GMT_OFFSET_SEC, DAYLIGHT_OFFSET_SEC, NTP_SERVER);
 }
 
 void serialPrintCurrentTime()

@@ -5,5 +5,15 @@
 #define DEBUG 1
 
 #define NTP_SERVER "pool.ntp.org"
-const long  gmtOffset_sec = 0;
-const int   daylightOffset_sec = 3600;
+#define GMT_OFFSET_SEC 0
+#define DAYLIGHT_OFFSET_SEC 3600
+
+#define DHT_SENSOR
+
+
+
+#if defined(DHT_SENSOR)
+#define DHTPIN 15
+#define DHTTYPE DHT22
+#define DHT_READING_INTERVAL 3000
+#endif
