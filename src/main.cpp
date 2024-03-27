@@ -13,6 +13,11 @@ void setup()
 
 void loop()
 {
-  //serialPrintCurrentTime();
   sensorsRead();
+  if (isTimeSyncNeeded == 1)
+  {
+    Serial.println("need config time");
+    void syncTime();
+    isTimeSyncNeeded = 0;
+  }
 }

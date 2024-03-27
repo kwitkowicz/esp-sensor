@@ -1,5 +1,8 @@
 #include "network.h"
 
+hw_timer_t *timeSyncTimer = NULL;
+volatile int isTimeSyncNeeded;
+
 void initWiFi()
 {
     WiFi.persistent(false);
@@ -57,6 +60,17 @@ void serialPrintWiFiInfo()
 void configTime()
 {
     configTime(GMT_OFFSET_SEC, DAYLIGHT_OFFSET_SEC, NTP_SERVER);
+    timeSyncTimer = timerBegin(0, 80, true);           	// timer 0, prescalar: 80, UP counting
+    timerAttachInterrupt(timeSyncTimer, &onTimeSyncTimer, true); 	// Attach interrupt
+    timerAlarmWrite(timeSyncTimer, 2000000, true);  		// Match value= 1000000 for 1 sec. delay.
+    timerAlarmEnable(timeSyncTimer);   
+    isTimeSyncNeeded = 0;
+
+}
+
+void syncTime()
+{
+    configTime(GMT_OFFSET_SEC, DAYLIGHT_OFFSET_SEC, NTP_SERVER);
 }
 
 void serialPrintCurrentTime()
@@ -76,4 +90,8 @@ String getStringCurrentTime()
     }
     strftime(timeString, sizeof(timeString), "%d-%m-%Y %H:%M:%S", &timeinfo);
     return timeString;
+}
+
+void IRAM_ATTR onTimeSyncTimer(){
+    isTimeSyncNeeded = 1;
 }

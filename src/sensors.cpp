@@ -19,8 +19,6 @@ void sensorsRead()
         sensorsReadings.dhtTemperature = getDHTTemperature();
         sensorsReadings.dhtHumidity = getDHTHumidity();
         sensorsReadings.dhtHeatIndex = getDHTHeatIndex(sensorsReadings.dhtTemperature, sensorsReadings.dhtHumidity);
-        Serial.println(sensorsReadings.dhtTemperature);
-        Serial.println(sensorsReadings.dhtHeatIndex);
         dhtLastReadingTime = dhtCurrentReadingTime;
     }
 #endif
