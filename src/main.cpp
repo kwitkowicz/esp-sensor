@@ -2,6 +2,7 @@
 #include <WiFiClientSecure.h>
 #include "network.h"
 #include "sensors.h"
+#include "mqtt.h"
 
 void setup()
 {
@@ -9,6 +10,7 @@ void setup()
   initWiFi();
   configTime();
   setupSensors();
+  setupMQTT();
 }
 
 void loop()
@@ -16,8 +18,8 @@ void loop()
   sensorsRead();
   if (isTimeSyncNeeded == 1)
   {
-    Serial.println("need config time");
     void syncTime();
     isTimeSyncNeeded = 0;
   }
+  publishToMQTT(getPayload());//ugly temporary workaround
 }

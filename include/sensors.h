@@ -27,3 +27,5 @@ void setupSensors();
     float getDHTHumidity(void);
     float getDHTHeatIndex(float temperature, float humidity);
 #endif
+
+char * getPayload();

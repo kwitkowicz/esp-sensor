@@ -8,6 +8,7 @@
 #include "sensors.h"
 
 struct sensorsReadingsType sensorsReadings;
+char payload[50] = {0}; //TODO
 
 void sensorsRead()
 {
@@ -77,3 +78,10 @@ float getDHTHeatIndex(float temperature, float humidity)
 }
 #endif
 
+char * getPayload()
+{
+#if defined(DHT_SENSOR)
+    sprintf(payload, "Temp: %.2f,  Hum: %.2f, HI: %.2f",sensorsReadings.dhtTemperature, sensorsReadings.dhtHumidity, sensorsReadings.dhtHeatIndex);
+#endif
+    return payload;
+}
