@@ -60,9 +60,9 @@ void serialPrintWiFiInfo()
 void configTime()
 {
     configTime(GMT_OFFSET_SEC, DAYLIGHT_OFFSET_SEC, NTP_SERVER);
-    timeSyncTimer = timerBegin(0, 80, true);           	// timer 0, prescalar: 80, UP counting
-    timerAttachInterrupt(timeSyncTimer, &onTimeSyncTimer, true); 	// Attach interrupt
-    timerAlarmWrite(timeSyncTimer, 2000000, true);  		// Match value= 1000000 for 1 sec. delay.
+    timeSyncTimer = timerBegin(0, 80, true);
+    timerAttachInterrupt(timeSyncTimer, &onTimeSyncTimer, true);
+    timerAlarmWrite(timeSyncTimer, 2000000, true);
     timerAlarmEnable(timeSyncTimer);   
     isTimeSyncNeeded = 0;
 
